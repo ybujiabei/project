@@ -1,9 +1,6 @@
 
 package com.ten.project.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -28,6 +25,11 @@ public class UserDao {
 	
 		return true;
 	}
-	//
+	//ÃÌº””√ªß
+	public int saveUser(User user) {
+		return jt.update("INSERT INTO `project`.`user`( `username`, `password`, `usertype`, `phone`) VALUES (?, ?, ?, ?)",
+				user.getUsername(),user.getPassword(),user.getUsertype(),user.getPhone());
+		 
+	}
 
 }

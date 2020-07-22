@@ -13,7 +13,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.ten.project.bean.Product;
-import com.ten.project.bean.Type;
 import com.ten.project.dao.ProductDao;
 import com.ten.project.dao.TypeDao;
 
@@ -28,7 +27,7 @@ public class ProductAddUI extends IndexAdmin {
 	Font d = new Font("黑体", Font.BOLD, 16);
 	Product product = new Product();
 	//初始化对象
-	//JLabel productidla = new JLabel("id");
+	JLabel productpidla = new JLabel("类型id");
 	JLabel productnamela = new JLabel("名字");
 	JLabel productpricela = new JLabel("价格");
 	JLabel productnumla = new JLabel("数量");
@@ -40,7 +39,7 @@ public class ProductAddUI extends IndexAdmin {
 	JTextField productprice = new JTextField();
 	JTextField productnum = new JTextField();
 	JTextField productdesc = new JTextField();
-	//JTextField productid = new JTextField();
+	JTextField productpid = new JTextField();
 	
 	JRadioButton radioButton1 = new JRadioButton("台式");// 单选框
     JRadioButton radioButton2 = new JRadioButton("笔记本");
@@ -79,8 +78,8 @@ public class ProductAddUI extends IndexAdmin {
 		producbrandla.setBounds(120,500,100,30);
 		producbrandla.setFont(f);
 		//
-		//productidla.setBounds(120,530,100,30);
-		//productid.setFont(f);
+		productpidla.setBounds(120,530,100,30);
+		productpid.setFont(f);
 		//输入框
 		productname.setBounds(250,150,200,30);
 		productprice.setBounds(250,210,200,30);
@@ -88,7 +87,7 @@ public class ProductAddUI extends IndexAdmin {
 		productdesc.setBounds(250,330,200,30);
 		radioButton1.setBounds(250,450,80,30);
 		radioButton2.setBounds(350,450,80,30);
-		//productid.setBounds(250,520,200,30);
+		productpid.setBounds(250,520,200,30);
 
 			//按钮
 		addTypeButton.setBounds(120,550,330,50);
@@ -106,14 +105,13 @@ public class ProductAddUI extends IndexAdmin {
 		index.add(productdescla);
 		index.add(producttypela);
 		index.add(producbrandla);
-		//index.add(productidla);
-		//index.add(productid);
+		index.add(productpidla);
+		index.add(productpid);
 		index.add(productname);
 		index.add(productprice);
-		index.add(productnum);
 		index.add(productdesc);
 		index.add(producttype);
-
+		index.add(productnum);
 		index.add(radioButton1);
 		index.add(radioButton2);
 
@@ -144,14 +142,14 @@ public class ProductAddUI extends IndexAdmin {
 				String productnameText = productname.getText();
 				String productpriceText = productprice.getText();
 				String productdescText = productdesc.getText();
-				Integer productnumText = productnum.getCaretPosition();
-				//Integer productidText = productid.getCaretPosition();
+				String productnumText = productnum.getText();
+				String productidText = productpid.getText();
 				//封装type类型数据
 				product.setGoodname(productnameText);
 				product.setGooddesc(productdescText);
 				product.setPrice(Double.parseDouble(productpriceText));
-			    product.setNumber(productnumText);
-			 //   product.setGoodid(productidText);
+			    product.setNumber(Integer.parseInt(productnumText));
+			    product.setGoodid(Integer.parseInt(productidText));
 			
 				if (radioButton1.isSelected()) {
 					product.setGoodtype(0);

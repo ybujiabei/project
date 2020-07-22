@@ -10,7 +10,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.ten.project.bean.Product;
@@ -18,26 +17,26 @@ import com.ten.project.dao.ProductDao;
 import com.ten.project.dao.TypeDao;
 
 public class ProductUpdateUI extends IndexAdmin {
+	//商品信息
 	Product p;
-	public ProductUpdateUI(String username, int gid) {
+	public ProductUpdateUI(String username, int pid) {
 		super(username);
-		//为type赋值
-		ProductDao productdao = new ProductDao();
-		//根据id查询type信息
-		p = productdao.findProductById(gid);
-		//调用init方法初始化
 		init();
+		//根据id查询商品信息
+		ProductDao productdao = new ProductDao();
+		p = productdao.findProductById(pid);
+		
 	}
 
 	//初始化字体
 	Font d = new Font("黑体", Font.BOLD, 16);
-	Product product = new Product();
+	
 	//初始化对象
 	JLabel productnamela = new JLabel("名字");
 	JLabel productpricela = new JLabel("价格");
 	JLabel productnumla = new JLabel("数量");
 	JLabel productdescla = new JLabel("简介");
-	JLabel producttypela = new JLabel("类型");
+	//JLabel producttypela = new JLabel("类型");
 	JLabel producbrandla = new JLabel("品牌");
 	
 	JTextField productname = new JTextField();
@@ -45,8 +44,7 @@ public class ProductUpdateUI extends IndexAdmin {
 	JTextField productnum = new JTextField();
 	JTextField productdesc = new JTextField();
 	
-	JRadioButton radioButton1 = new JRadioButton("台式");// 单选框
-    JRadioButton radioButton2 = new JRadioButton("笔记本");
+
 	//获取数据
 	TypeDao typeDao = new TypeDao();
     Vector brands = typeDao.findAllbrand();
@@ -54,14 +52,13 @@ public class ProductUpdateUI extends IndexAdmin {
     
 //按钮组
     ButtonGroup btButtonGroup = new ButtonGroup();
-    JButton addTypeButton = new JButton("保存");
+    JButton saveUpdateButton = new JButton("保存");
 
 
 	private void init() {
 		//按钮组
 		ButtonGroup btButtonGroup = new ButtonGroup();
-		btButtonGroup.add(radioButton1);
-		btButtonGroup.add(radioButton2);
+
 
 		//用户名
 		productnamela.setBounds(120,150,100,30);
@@ -76,8 +73,7 @@ public class ProductUpdateUI extends IndexAdmin {
 		productdescla.setBounds(120,330,100,30);
 		productdescla.setFont(f);
 		//
-		producttypela.setBounds(120,450,100,30);
-		producttypela.setFont(f);
+
 		//
 		producbrandla.setBounds(120,500,100,30);
 		producbrandla.setFont(f);
@@ -94,16 +90,22 @@ public class ProductUpdateUI extends IndexAdmin {
 		productdesc.setBounds(250,330,200,30);
 		productdesc.setText(p.getGooddesc());
 
-		radioButton1.setBounds(250,450,80,30);
-		radioButton2.setBounds(350,450,80,30);
+
 
 			//按钮
-		addTypeButton.setBounds(120,550,330,50);
-		//设置默认
+		saveUpdateButton.setBounds(120,550,330,50);
+		//设置回显
+		//索引
+		int brandindex = 0;
+		for (int i = 0; i < brands.size(); i++) {
+			String n = (String) brands.get(i);
+			if (n.equals(p.getBrand())) {
+			    brandindex = i ;
+		}
 
-		radioButton1.setSelected(p.getGoodtype() == 0 ? true : false);
-		radioButton1.setSelected(p.getGoodtype() == 1 ? true : false);
 
+//设置索引
+			producttype.setSelectedIndex(brandindex);
 
 
 		productdesc.setBounds(250,330,100,80);
@@ -114,7 +116,7 @@ public class ProductUpdateUI extends IndexAdmin {
 		index.add(productpricela);
 		index.add(productnumla);
 		index.add(productdescla);
-		index.add(producttypela);
+
 		index.add(producbrandla);
 
 		
@@ -123,13 +125,13 @@ public class ProductUpdateUI extends IndexAdmin {
 		index.add(productnum);
 		index.add(productdesc);
 		index.add(producttype);
+//
 
-		index.add(radioButton1);
-		index.add(radioButton2);
 
-		index.add(addTypeButton);
+
+		index.add(saveUpdateButton);
 		
-producttype.addActionListener(new ActionListener() {
+     producttype.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,38 +142,32 @@ producttype.addActionListener(new ActionListener() {
 				TypeDao typyDao = new TypeDao();
 				Integer goodid = typyDao.findTypeIdbyGname(brand);
 			//设置
-				product.setGoodid(goodid);
+				p.setGoodid(goodid);
 			}
 		});
 		
 		
-		addTypeButton.addActionListener(new ActionListener() {
+         saveUpdateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String productnameText = productname.getText();
 				String productpriceText = productprice.getText();
 				String productdescText = productdesc.getText();
-				Integer productnumText = productnum.getCaretPosition();
+				String productnumText = productnum.getText();
 				//封装type类型数据
-				product.setGoodname(productnameText);
-				product.setGooddesc(productdescText);
-				product.setPrice(Double.parseDouble(productpriceText));
-			    product.setNumber(productnumText);
+				p.setGoodname(productnameText);
+				p.setGooddesc(productdescText);
+				p.setPrice(Double.parseDouble(productpriceText));
+			    p.setNumber(Integer.parseInt(productnumText));
 			
-				if (radioButton1.isSelected()) {
-					product.setGoodtype(0);
-				}
-				if (radioButton2.isSelected()) {
-					product.setGoodtype(1);
-				}
 
-//添加
+//修改
 
 				ProductDao productDao = new ProductDao();
-				int p = productDao.savaProduct(product);
+				int i = productDao.updateProduct(p);
 				
-				if ( p == 1) {
+				if ( i == 1) {
 					//页面转换
 					index.setVisible(false);
 					System.out.println("商品类别");
@@ -187,5 +183,6 @@ producttype.addActionListener(new ActionListener() {
 		});
 
 				
+	}
 	}
 }

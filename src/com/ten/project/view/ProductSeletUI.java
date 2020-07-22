@@ -34,7 +34,7 @@ public class ProductSeletUI extends IndexAdmin {
 		JScrollPane jp = null;
 		JButton updateButton;
 		//获取id
-		int gid;
+		int pid;
 	
 		private void typeaction(String username) {
 			//添加
@@ -54,8 +54,8 @@ public class ProductSeletUI extends IndexAdmin {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 			        //为id赋值
-					gid = (int) typeTable.getValueAt(typeTable.getSelectedRow(), 0);
-					System.out.println(gid);
+					pid = (int) typeTable.getValueAt(typeTable.getSelectedRow(), 0);
+					System.out.println(pid);
 				}
 			});
 			//删除按钮添加事件
@@ -64,8 +64,8 @@ public class ProductSeletUI extends IndexAdmin {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//页面转换
-	     //        System.out.println(gid);
-					if (gid == 0) {
+	     //        System.out.println(pid);
+					if (pid == 0) {
 						JOptionPane.showConfirmDialog(null, "请选择要删除的记录！");
 					}else {
 						//提示
@@ -73,12 +73,12 @@ public class ProductSeletUI extends IndexAdmin {
 	//0 yes 1 no
 						if (mess == 0) {
 							TypeDao typeDao = new TypeDao();
-							int del = typeDao.delTypeById(gid);
+							int del = typeDao.delTypeById(pid);
 							if (del == 1) {
 								JOptionPane.showConfirmDialog(null, "删除成功！");
 								//重新绘制页面表格标题
 								Vector tt = new Vector<>();
-								tt.add("id");
+								tt.add("pid");
 								tt.add("品牌");
 								tt.add("颜色");
 								tt.add("类型");
@@ -114,11 +114,11 @@ public class ProductSeletUI extends IndexAdmin {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (gid == 0) {
+					if (pid == 0) {
 						JOptionPane.showConfirmDialog(null, "请选择要修改的记录！");
 					}else {
 						index.setVisible(false);
-						new ProductUpdateUI(username,gid);
+						new ProductUpdateUI(username,pid);
 					}
 				}
 			});
@@ -143,7 +143,7 @@ public class ProductSeletUI extends IndexAdmin {
 			updateButton.setBounds(400,30,100,30);
 			//表格标题
 			Vector tt = new Vector<>();
-			tt.add("id");
+			tt.add("pid");
 			tt.add("品牌");
 			tt.add("名称");
 			tt.add("价格");
@@ -153,7 +153,7 @@ public class ProductSeletUI extends IndexAdmin {
 		
 			//数据
 			ProductDao productDao = new ProductDao();
-			Vector list = productDao.findAllType();
+			Vector list = productDao.findAllProduct();
 			
 			//System.out.println(list);
 			

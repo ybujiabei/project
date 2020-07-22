@@ -1,7 +1,5 @@
 package com.ten.project.bean;
 
-import java.util.Date;
-
 public class Product {
 //
 //
@@ -18,6 +16,23 @@ public class Product {
 	private Integer gflag;
 	private String brand;
 	private Integer goodtype;
+	private Integer pid;
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Product [goodid=" + goodid + ", goodname=" + goodname + ", price=" + price + ", number=" + number
+				+ ", gooddesc=" + gooddesc + ", gflag=" + gflag + ", brand=" + brand + ", goodtype=" + goodtype
+				+ ", pid=" + pid + "]";
+	}
+
 	public Integer getGoodtype() {
 		return goodtype;
 	}
@@ -66,10 +81,7 @@ public class Product {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	@Override
-	public String toString() {
-		return "Product [goodid=" + goodid + ", goodname=" + goodname + ", price=" + price + ", number=" + number
-				+ ", gooddesc=" + gooddesc + ", gflag=" + gflag + ", brand=" + brand + ", goodtype=" + goodtype + "]";
-	}
+
+
 
 }

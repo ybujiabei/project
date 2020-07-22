@@ -33,18 +33,16 @@ public class TypeUpdateUI extends IndexAdmin{
 	//初始化对象
 	JLabel typecolorla = new JLabel("颜色");
 	JLabel typebrandla = new JLabel("品牌");
-	JLabel typela = new JLabel("类型（0台式，1笔记本）");
-	JLabel typegflagla = new JLabel("是否上架");
+	JLabel typegflagla = new JLabel("0上架/1下架");
+	JLabel typela = new JLabel("类型");
 	
 	
 	JTextField typecolor = new JTextField();
 	JTextField typebrand = new JTextField();
-	JTextField type1 = new JTextField();
+	JTextField typegflag = new JTextField();
 
-//    JRadioButton radioButton3 = new JRadioButton("台式");// 单选框
-//    JRadioButton radioButton4 = new JRadioButton("笔记本");
-	JRadioButton radioButton1 = new JRadioButton("上架");// 单选框
-    JRadioButton radioButton2 = new JRadioButton("下架");
+	JRadioButton radioButton1 = new JRadioButton("台式");// 单选框
+    JRadioButton radioButton2 = new JRadioButton("笔记本");
 //按钮组
     ButtonGroup btButtonGroup = new ButtonGroup();
     JButton addTypeButton = new JButton("保存");
@@ -54,8 +52,7 @@ public class TypeUpdateUI extends IndexAdmin{
 		ButtonGroup btButtonGroup = new ButtonGroup();
 		btButtonGroup.add(radioButton1);
 		btButtonGroup.add(radioButton2);
-//		btButtonGroup.add(radioButton3);
-//		btButtonGroup.add(radioButton4);
+
 		//用户名
 		typecolorla.setBounds(120,150,100,30);
 		typecolorla.setFont(f);
@@ -64,11 +61,11 @@ public class TypeUpdateUI extends IndexAdmin{
 		typebrandla.setBounds(120,210,100,30);
 		typebrandla.setFont(f);
 		//
-		typela.setBounds(120,270,390,30);
-		typela.setFont(f);
-		//
-		typegflagla.setBounds(120,330,100,30);
+		typegflagla.setBounds(120,270,100,30);
 		typegflagla.setFont(f);
+		//
+		typela.setBounds(120,330,100,30);
+		typela.setFont(f);
 		//输入框  //设置回显
 		typecolor.setBounds(250,150,200,30);
 		typecolor.setText(type.getColor());
@@ -76,8 +73,8 @@ public class TypeUpdateUI extends IndexAdmin{
 		typebrand.setBounds(250,210,200,30);
 		typebrand.setText(type.getBrand());
 		
-		type1.setBounds(250,270,200,30);
-		type1.setText(type.getGoodtype().toString());
+		typegflag.setBounds(250,270,200,30);
+		typegflag.setText(type.getGflag().toString());
 
 		radioButton1.setBounds(250,330,80,30);
 		radioButton2.setBounds(350,330,80,30);
@@ -85,8 +82,8 @@ public class TypeUpdateUI extends IndexAdmin{
 			//按钮
 		addTypeButton.setBounds(120,390,330,50);
 		//设置默认
-		radioButton1.setSelected(type.getGflag()==1 ? true : false);
-		radioButton2.setSelected(type.getGflag()==0 ? true : false);
+		radioButton1.setSelected(type.getGoodtype() ==0 ? true : false);
+		radioButton2.setSelected(type.getGoodtype() ==1 ? true : false);
 
 		
 
@@ -97,12 +94,10 @@ public class TypeUpdateUI extends IndexAdmin{
 		
 		index.add(typecolor);
 		index.add(typebrand);
-		index.add(type1);
+		index.add(typegflag);
 
 		index.add(radioButton1);
 		index.add(radioButton2);
-//		index.add(radioButton3);
-//		index.add(radioButton4);
 		index.add(addTypeButton);
 		
 		//添加事件
@@ -113,16 +108,16 @@ public class TypeUpdateUI extends IndexAdmin{
 		
 				String typecolorText = typecolor.getText();
 				String typebrandText = typebrand.getText();	
-				Integer type1Text = type1.getCaretPosition();
+				String typegflagText = typegflag.getText();	
 				//封装type类型数据
-				type.setGoodtype(type1Text);
+				type.setGflag(Integer.getInteger(typegflagText));
 				type.setColor(typecolorText);
 				type.setBrand(typebrandText);
 				if (radioButton1.isSelected()) {
-					type.setGflag(0);
+					type.setGoodtype(0);
 				}
 				if (radioButton2.isSelected()) {
-					type.setGflag(1);
+					type.setGoodtype(1);
 				}
 
 //修改
@@ -135,7 +130,7 @@ public class TypeUpdateUI extends IndexAdmin{
 			
 					//构建新页面
 				
-					new TypeSeletUI("yemei");
+				new TypeSeletUI("你");
 				}
 				
 				

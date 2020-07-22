@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.ten.project.utils.JDBCUtils;
-import com.ten.project.bean.User;
 import com.ten.project.bean.Type;
 
 public class TypeDao {
@@ -41,8 +40,8 @@ public class TypeDao {
 
 
 	public Boolean addType(Type type) {
-		int update = jt.update("INSERT INTO `project`.`ptype`(`color`,`brand`,`goodtype`,`gflag`,`goodid`,`gtime`)VALUES(?,?,?,?,?,curdate())",
-			type.getColor(),type.getBrand(),type.getGoodtype(),type.getGoodid(),type.getGflag());
+		int update = jt.update("INSERT INTO `project`.`ptype`(`color`,`brand`,`goodtype`,`gflag`,`gtime`)VALUES(?,?,?,?,curdate())",
+			type.getColor(),type.getBrand(),type.getGoodtype(),type.getGflag());
 		return update>0 ? true : false;
 	}
 
@@ -62,7 +61,7 @@ public class TypeDao {
 
 //ÐÞ¸ÄÖ´ÐÐ
 	public int updateType(Type type) {
-		int update = jt.update("UPDATE `project`.`ptype` SET `color` = ?, `brand` = ?, `goodtype` = ?, `gtime` =curdate(), `gflag` = ? WHERE `goodid` = ?",
+		int update = jt.update("UPDATE `project`.`ptype` SET `color` = ?, `brand` = ?, `goodtype` = ?, `gflag` = ?  WHERE `goodid` = ?",
 				type.getColor(),type.getBrand(),type.getGoodtype(),type.getGflag(),type.getGoodid());
 			
 	return update;
